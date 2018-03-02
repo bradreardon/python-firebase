@@ -1,5 +1,5 @@
 import requests
-import urlparse #for urlparse and urljoin
+from urllib.parse import urlparse, urljoin
 import os #for os.path.dirname
 import json #for dumps
 
@@ -16,13 +16,13 @@ class Firebase():
 
     def child(self, path):
         root_url = '%s/' % self.ROOT_URL
-        url = urlparse.urljoin(root_url, path.lstrip('/'))
+        url = urljoin(root_url, path.lstrip('/'))
         return Firebase(url)
 
     def parent(self):
         url = os.path.dirname(self.ROOT_URL)
         #If url is the root of your Firebase, return None
-        up = urlparse.urlparse(url)
+        up = urlparse(url)
         if up.path == '':
             return None #maybe throw exception here?
         return Firebase(url)
